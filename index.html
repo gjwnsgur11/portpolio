@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Heo Jun Hyeok</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* [1. 테마 설정] */
+        :root {
+            --primary-color: #004080; 
+            --primary-light: #66b2ff; 
+            --accent-blue: #4a90e2;   
+            
+            /* 간트차트 컬러 */
+            --gantt-univ-bg: #fff3cd;
+            --gantt-univ-text: #856404;
+            --gantt-univ-border: #ffe082; 
+
+            --gantt-academy-bg: #ffebee;
+            --gantt-academy-text: #b71c1c;
+            --gantt-academy-border: #ffcdd2;
+
+            --gantt-poly-bg: #e6f0ff;
+            --gantt-poly-text: #004080;
+            --gantt-poly-border: #b3d1ff;
+
+            --bg-color: #fcfcfc;
+            --card-bg: #ffffff;
+            --text-main: #2d3436;
+            --text-sub: #636e72;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --radius: 16px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+            letter-spacing: -0.5px; 
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60%;
+            height: 6px;
+            background: var(--primary-light);
+            opacity: 0.4;
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            z-index: -1;
+        }
+
+        /* [2. 소개 섹션] */
+        .intro-section {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .profile-card {
+            flex: 1;
+            min-width: 300px;
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #eee;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 4px solid var(--primary-light);
+        }
+
+        .contact-info {
+            margin-top: 20px;
+            text-align: left;
+            display: inline-block;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            width: 100%;
+        }
+
+        .contact-item {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .contact-item i { color: var(--primary-color); }
+
+        .traits-grid {
+            flex: 2;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .trait-box {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            border-left: 5px solid var(--primary-color);
+        }
+        .trait-box:hover { transform: translateY(-5px); }
+        .trait-icon { font-size: 2rem; color: var(--primary-color); margin-bottom: 10px; }
+        .trait-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 5px; }
+        .trait-desc { font-size: 0.9rem; color: var(--text-sub); word-break: keep-all; }
+
+
+        /* [3. Education - Timeline] */
+        .gantt-wrapper {
+            width: 100%;
+            position: relative;
+            padding: 20px 0 40px 0;
+            overflow-x: auto; 
+        }
+
+        .year-axis {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 0 5px;
+            font-weight: 700;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+        }
+
+        .base-line {
+            width: 100%;
+            height: 4px;
+            background-color: #333;
+            position: relative;
+            border-radius: 2px;
+            margin-bottom: 20px;
+            z-index: 5;
+        }
+
+        .axis-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--accent-blue);
+            border-radius: 50%;
+            border: 2px solid #fff;
+            position: absolute;
+            top: -4px;
+            transform: translateX(-50%);
+            z-index: 6;
+        }
+
+        .bars-container {
+            position: relative;
+            height: 110px;
+            width: 100%;
+        }
+
+        .gantt-bar {
+            position: absolute;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            cursor: default;
+            font-weight: 600;
+            backface-visibility: hidden;
+            transform: translateZ(0); 
+            -webkit-font-smoothing: subpixel-antialiased;
+        }
+        
+        .gantt-bar:hover { 
+            z-index: 100; 
+            transform: scale(1.03); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .bar-content {
+            text-align: center;
+            line-height: 1.2;
+            padding: 0 10px;
+        }
+        .bar-title { font-size: 0.9rem; display: block; }
+        .bar-date { font-size: 0.75rem; opacity: 0.85; display: block; font-weight: 500;}
+
+        .bar-univ {
+            background-color: var(--gantt-univ-bg);
+            color: var(--gantt-univ-text);
+            border: 1px solid var(--gantt-univ-border);
+            top: 0;
+            z-index: 1;
+        }
+        .bar-academy {
+            background-color: var(--gantt-academy-bg);
+            color: var(--gantt-academy-text);
+            border: 1px solid var(--gantt-academy-border);
+            top: 54px;
+            z-index: 2;
+            min-width: 140px; 
+        }
+        .bar-poly {
+            background-color: var(--gantt-poly-bg);
+            color: var(--gantt-poly-text);
+            border: 1px solid var(--gantt-poly-border);
+            top: 54px; 
+            z-index: 2;
+            min-width: 180px;
+        }
+
+        .mobile-history-list { display: none; }
+
+
+        /* [4. Skills] */
+        .skill-group { margin-bottom: 30px; }
+        .skill-label { font-size: 1.3rem; font-weight: 700; margin-bottom: 15px; color: var(--primary-color); }
+        .skill-badges { display: flex; flex-wrap: wrap; gap: 10px; }
+        
+        .badge {
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: default;
+        }
+        .badge:hover {
+            transform: translateY(-3px) scale(1.02); 
+            box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+        }
+        
+        .badge.strong { background: #e6f0ff; color: #004080; border: 1px solid #b3d1ff; }
+        .badge.know { background: #fff3cd; color: #856404; border: 1px solid #ffe082; } 
+        .badge.etc { background: #f8f9fa; color: #495057; border: 1px solid #dee2e6; }
+
+
+        /* [5. Certifications] */
+        .cert-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .cert-item {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+        .cert-item:hover { transform: translateY(-3px); }
+
+        .cert-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            background: #e6f0ff;
+            width: 50px; height: 50px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .cert-info h4 { margin: 0; font-size: 1rem; color: var(--text-main); }
+        .cert-info p { margin: 0; font-size: 0.85rem; color: var(--text-sub); }
+
+
+        /* [6. Projects - Accordion Style] */
+        .project-wrapper {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            overflow: hidden; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; 
+        }
+        
+        .project-wrapper:not(.active):hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        
+        .project-header-card {
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            cursor: pointer;
+            transition: background 0.2s;
+            position: relative;
+            z-index: 2;
+        }
+        .project-header-card:hover {
+            background: #f9faff;
+        }
+
+        /* [수정됨] 호버 오버레이 효과 (빈틈 방지를 위한 크기 조정) */
+        .hover-overlay {
+            position: absolute;
+            /* 상하 1px씩 여유를 주어 빈틈을 메움.
+               top: -1px, height: calc(100% + 2px) 
+            */
+            top: -1px;
+            right: 0;
+            width: 0; 
+            height: calc(100% + 2px);
+            
+            /* 불투명한 배경 (그라데이션) */
+            background: linear-gradient(to right, transparent, #e6f0ff 30%);
+            
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 0;
+            overflow: hidden;
+            
+            transition: width 0.3s ease-in-out, padding-right 0.3s ease-in-out, opacity 0.2s ease;
+            
+            pointer-events: none; 
+            z-index: 5; 
+            opacity: 0; 
+        }
+
+        .hover-text {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        /* 닫혀있는 카드 호버 시 설정 */
+        .project-wrapper:not(.active) .project-header-card:hover .hover-overlay {
+            width: 350px; 
+            opacity: 1; 
+            padding-right: 60px; 
+        }
+        
+        .project-wrapper:not(.active) .project-header-card:hover .hover-overlay .hover-text {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 0.1s; 
+        }
+
+
+        .project-icon {
+            width: 80px; height: 80px;
+            background: var(--primary-color);
+            border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; color: #fff; flex-shrink: 0;
+        }
+        .project-info { flex: 1; position: relative; z-index: 2; }
+        .project-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+        .project-title { font-size: 1.4rem; font-weight: 700; }
+        .project-meta { display: flex; gap: 15px; font-size: 0.9rem; color: var(--text-sub); }
+        .project-meta span i { margin-right: 5px; color: var(--primary-color); }
+        .project-desc { color: var(--text-sub); }
+
+        .toggle-icon {
+            color: var(--text-sub);
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 10; 
+        }
+        
+        .project-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1), opacity 0.5s ease;
+            opacity: 0;
+            background: #fff;
+            border-top: 1px solid #eee;
+        }
+
+        .project-wrapper.active .project-detail {
+            max-height: 3000px; 
+            opacity: 1;
+            transition: max-height 0.8s ease-in-out, opacity 0.5s ease;
+        }
+        
+        .project-wrapper.active .toggle-icon {
+            transform: rotate(180deg);
+            color: var(--primary-color);
+        }
+
+        /* [상세 내용 스타일] */
+        .detail-content {
+            padding: 30px;
+            background-color: #fdfdfd;
+        }
+
+        /* PDF 버튼 스타일 */
+        .pdf-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 35px; 
+        }
+        
+        .btn-pdf-view {
+            flex: 2; 
+            background: linear-gradient(135deg, var(--primary-color) 0%, #2980b9 100%);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0, 64, 128, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-pdf-view:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 64, 128, 0.4);
+        }
+
+        .btn-pdf-download {
+            flex: 1;
+            background: #fff;
+            color: var(--text-main);
+            border: 2px solid #e9ecef;
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-pdf-download:hover {
+            background: #f8f9fa;
+            border-color: #ced4da;
+        }
+
+        /* 시연 영상 버튼 스타일 */
+        .btn-video-view {
+            flex: 1;
+            background: linear-gradient(135deg, #ff0000 0%, #c4302b 100%);
+            color: white;
+            padding: 16px 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-video-view:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.4);
+        }
+        
+        .detail-section-title {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+            margin: 30px 0 15px 0;
+            font-weight: 700;
+        }
+        .detail-section-title:first-child { margin-top: 0; }
+
+        .p-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+        .p-info-item strong { color: var(--primary-color); margin-right: 5px; }
+
+        .p-list { list-style: none; padding-left: 5px; }
+        .p-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+        .p-list li::before {
+            content: "✔";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-size: 12px;
+            top: 4px;
+        }
+
+        /* FontAwesome 아이콘 스타일 */
+        .p-tech-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .p-tech-tag {
+            background: #fff;
+            color: #495057;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid #dee2e6;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .p-tech-tag i {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        .ps-box {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .ps-item {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+        }
+        .ps-q { font-weight: 700; color: #d63031; font-size: 0.95rem; margin-bottom: 5px; display: block; }
+        .ps-a { font-weight: 700; color: var(--accent-blue); font-size: 0.95rem; margin-bottom: 5px; display: block; }
+        .ps-desc { font-size: 0.9rem; color: #555; line-height: 1.5; }
+        .ps-desc strong { color: #333; font-weight: 700; }
+
+
+        /* [모바일 대응] */
+        @media (max-width: 768px) {
+            .intro-section { flex-direction: column; }
+            .traits-grid { grid-template-columns: 1fr; }
+            
+            .gantt-wrapper { display: none; }
+            .mobile-history-list { display: flex; flex-direction: column; gap: 15px; }
+            
+            .m-history-item {
+                background: #fff;
+                padding: 20px;
+                border-radius: 12px;
+                border-left-width: 5px;
+                border-left-style: solid;
+                box-shadow: var(--shadow);
+            }
+            .m-date { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 5px; }
+            .m-title { font-weight: 700; font-size: 1.1rem; }
+            .m-desc { font-size: 0.9rem; color: var(--text-main); margin-top: 5px; }
+
+            .project-header-card { flex-direction: column; align-items: flex-start; gap: 15px;}
+            .project-top-row { flex-direction: column; align-items: flex-start; gap: 5px;}
+            .toggle-icon { position: absolute; top: 25px; right: 25px; }
+            
+            .pdf-actions { flex-direction: column; gap: 10px; }
+            .btn-pdf-view, .btn-pdf-download, .btn-video-view { flex: 1; width: 100%; }
+            
+            /* 모바일에서는 오버레이 효과 숨김 */
+            .hover-overlay { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="container">
+        <h2 class="section-title">Profile</h2>
+        <div class="intro-section">
+            <div class="profile-card">
+                <img src="https://via.placeholder.com/150" alt="프로필 사진" class="profile-img">
+                <h3>허준혁</h3>
+                <p style="margin-bottom: 15px; color: #666; font-weight: 500;">Cloud Security Engineer</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item"><i class="fas fa-envelope"></i> hjhv8v@naver.com</div>
+                    <div class="contact-item"><i class="fas fa-phone"></i> 010-3897-9129</div>
+                </div>
+            </div>
+
+            <div class="traits-grid">
+                <div class="trait-box">
+                    <i class="fas fa-book-open trait-icon"></i>
+                    <div class="trait-title">능동적인 학습</div>
+                    <div class="trait-desc">두려움 없는 도전으로 신기술을 습득하고, 프로젝트에 즉각 적용하여 내재화합니다.</div>
+                </div>
+                <div class="trait-box">
+                    <i class="fas fa-comments trait-icon"></i>
+                    <div class="trait-title">커뮤니케이션</div>
+                    <div class="trait-desc">경청과 적극적인 피드백을 통해 팀의 협업 시너지를 극대화합니다.</div>
+                </div>
+                <div class="trait-box">
+                    <i class="fas fa-pencil-alt trait-icon"></i>
+                    <div class="trait-title">꾸준한 기록</div>
+                    <div class="trait-desc">학습한 내용과 트러블 슈팅 과정을 개인적으로 정리하여 나만의 지식 자산으로 만듭니다.</div>
+                </div>
+                <div class="trait-box">
+                    <i class="fas fa-sticky-note trait-icon"></i>
+                    <div class="trait-title">꼼꼼한 메모</div>
+                    <div class="trait-desc">Notion을 활용해 아이디어와 중요한 정보를 놓치지 않고 수시로 메모하여 관리합니다.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="section-title">Education</h2>
+        
+        <div class="gantt-wrapper">
+            <div class="year-axis">
+                <span>2019</span><span>2020</span><span>2021</span><span>2022</span><span>2023</span><span>2024</span><span>2025</span><span>2026</span>
+            </div>
+            <div class="base-line">
+                <div class="axis-dot" style="left: 2%;"></div>
+                <div class="axis-dot" style="left: 47%;"></div>
+                <div class="axis-dot" style="left: 80%;"></div>
+                <div class="axis-dot" style="left: 98%;"></div>
+            </div>
+            <div class="bars-container">
+                <div class="gantt-bar bar-univ" style="left: 2%; width: 96%;">
+                    <div class="bar-content">
+                        <span class="bar-title">한밭대학교 (산업경영공학)</span>
+                        <span class="bar-date">2019.03 - 2026.02 (졸업예정)</span>
+                    </div>
+                </div>
+                <div class="gantt-bar bar-academy" style="left: 47%; width: 10%;">
+                    <div class="bar-content">
+                        <span class="bar-title">코리아IT아카데미</span>
+                        <span class="bar-date">22.07 - 22.09</span>
+                    </div>
+                </div>
+                <div class="gantt-bar bar-poly" style="left: 80%; width: 14%;">
+                    <div class="bar-content">
+                        <span class="bar-title">한국폴리텍대학 (클라우드보안)</span>
+                        <span class="bar-date">25.03 - 25.12</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mobile-history-list">
+            <div class="m-history-item" style="border-left-color: #ffe082;"> 
+                <div class="m-date">2019.03 - 2026.02</div>
+                <div class="m-title">한밭대학교</div>
+                <div class="m-desc">산업경영공학과 (졸업 예정)</div>
+            </div>
+            <div class="m-history-item" style="border-left-color: #e57373;"> 
+                <div class="m-date">2022.07 - 2022.09</div>
+                <div class="m-title">코리아IT아카데미</div>
+                <div class="m-desc">Java, DBMS, HTML5/CSS3 과정 수료</div>
+            </div>
+            <div class="m-history-item" style="border-left-color: #64b5f6;"> 
+                <div class="m-date">2025.03 - 2025.12</div>
+                <div class="m-title">한국폴리텍대학 (클라우드보안)</div>
+                <div class="m-desc">클라우드 인프라 구축 및 보안 엔지니어링 과정 수료</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="section-title">Skills</h2>
+        <div class="skill-group">
+            <div class="skill-label">Strong.</div>
+            <div class="skill-badges">
+                <div class="badge strong"><i class="fas fa-cloud"></i> Cloud Security</div>
+                <div class="badge strong"><i class="fas fa-network-wired"></i> Network (Cisco)</div>
+                <div class="badge strong"><i class="fab fa-linux"></i> Linux / Windows Server</div>
+            </div>
+        </div>
+        <div class="skill-group">
+            <div class="skill-label">Knowledgeable.</div>
+            <div class="skill-badges">
+                <div class="badge know"><i class="fab fa-python"></i> Python</div>
+                <div class="badge know"><i class="fas fa-database"></i> SQL (MySQL/MariaDB)</div>
+                <div class="badge know"><i class="fab fa-docker"></i> Docker / ELK Stack</div>
+            </div>
+        </div>
+        <div class="skill-group">
+            <div class="skill-label">Etc.</div>
+            <div class="skill-badges">
+                <div class="badge etc"><i class="fas fa-pen-square"></i> Notion</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="section-title">Certifications</h2>
+        <div class="cert-grid">
+            <div class="cert-item">
+                <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+                <div class="cert-info">
+                    <h4>CCST Cybersecurity</h4>
+                    <p>2025.11 | Cisco</p>
+                </div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-icon"><i class="fas fa-check-circle"></i></div>
+                <div class="cert-info">
+                    <h4>네트워크관리사 2급</h4>
+                    <p>2025.07 | ICQA</p>
+                </div>
+            </div>
+             <div class="cert-item">
+                <div class="cert-icon"><i class="fab fa-linux"></i></div>
+                <div class="cert-info">
+                    <h4>리눅스마스터 2급</h4>
+                    <p>2025.07 | KAIT</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="section-title">Projects</h2>
+
+        <div class="project-wrapper" id="project1">
+            <div class="project-header-card" onclick="toggleProject('project1')">
+                <div class="project-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="project-info">
+                    <div class="project-top-row">
+                        <div class="project-title">인프라 보안 구축 (Drop The Port!)</div>
+                        <div class="project-meta">
+                            <span><i class="fas fa-user"></i> 4명 (Team)</span>
+                            <span><i class="far fa-calendar-alt"></i> 2025.08 ~ 2025.11</span>
+                        </div>
+                    </div>
+                    <p class="project-desc">
+                        DMZ/Internal Zone 분리 및 방화벽 정책 설계를 통한 보안 인프라 구축 프로젝트입니다.
+                    </p>
+                </div>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+                
+                <div class="hover-overlay">
+                    <span class="hover-text">눌러서 자세히 보기 👆</span>
+                </div>
+            </div>
+            
+            <div class="project-detail">
+                <div class="detail-content">
+                    
+                    <div class="pdf-actions">
+                        <a href="인프라 보안 구축 프로젝트.pdf" target="_blank" class="btn-pdf-view">
+                            <i class="fas fa-file-pdf"></i> 상세 보고서(PDF) 바로 보기
+                        </a>
+                        <a href="인프라 보안 구축 프로젝트.pdf" download class="btn-pdf-download">
+                            <i class="fas fa-download"></i> 다운로드
+                        </a>
+                    </div>
+
+                    <div class="p-info-grid">
+                        <div class="p-info-item"><strong>역할:</strong> 네트워크 엔지니어</div>
+                        <div class="p-info-item"><strong>기여도:</strong> 25%</div>
+                        <div class="p-info-item"><strong>기간:</strong> 2025.08 - 2025.11 (4개월)</div>
+                    </div>
+
+                    <div class="detail-section-title">💡 3줄 요약</div>
+                    <ul class="p-list">
+                        <li>실제 기업 환경을 모사하여 <strong>DMZ/Internal Zone이 분리된 보안 인프라</strong> 설계</li>
+                        <li>방화벽 정책과 접근 제어(ACL)를 통해 <strong>최소 권한 원칙의 보안 환경</strong> 구현</li>
+                        <li>ELK Stack을 구축하여 분산된 로그를 중앙에서 <strong>실시간 관제 및 시각화</strong></li>
+                    </ul>
+
+                    <div class="detail-section-title">🛠 사용 기술 (Tech Stack)</div>
+                    <div class="p-tech-container">
+                        <span class="p-tech-tag"><i class="fas fa-network-wired"></i> Network (Cisco C3650)</span>
+                        <span class="p-tech-tag"><i class="fas fa-shield-alt"></i> Firewall (AhnLab TrusGuard 50B)</span>
+                        <span class="p-tech-tag"><i class="fas fa-server"></i> Server (Ubuntu 22.04, Win11)</span>
+                        <span class="p-tech-tag"><i class="fas fa-chart-line"></i> Monitoring (ELK Stack, Wireshark)</span>
+                        <span class="p-tech-tag"><i class="fab fa-docker"></i> Virtualization (Docker)</span>
+                        <span class="p-tech-tag"><i class="fas fa-database"></i> WEB/DB (Nginx, PHP, PostgreSQL)</span>
+                    </div>
+
+                    <div class="detail-section-title">💻 핵심 문제 해결 (Problem & Solution)</div>
+                    <div class="ps-box">
+                        <div class="ps-item">
+                            <span class="ps-q">Q. 단일망 사용으로 인한 보안 취약성 문제</span>
+                            <span class="ps-a">A. 망 분리 및 계층적 보안 아키텍처 적용</span>
+                            <span class="ps-desc">L3 스위치와 방화벽을 연동하여 DMZ(Web), Internal(DB/Log), 관리자망을 <strong>물리/논리적으로 격리</strong>하고 <strong>VLAN으로 트래픽 분산 처리</strong></span>
+                        </div>
+                        <div class="ps-item">
+                            <span class="ps-q">Q. 비인가 외부 접속 및 내부 정보 유출 위험</span>
+                            <span class="ps-a">A. 강력한 접근 제어 및 NAT 정책 수립</span>
+                            <span class="ps-desc">기본 정책을 'Deny All'로 설정 후, 웹 서비스(80/443) 등 <strong>필수 포트만 허용(Whitelist)</strong>하고, <strong>NAT를 적용</strong>하여 내부 IP 구조 은닉</span>
+                        </div>
+                        <div class="ps-item">
+                            <span class="ps-q">Q. 장비별 로그 분산으로 인한 장애 대응 지연</span>
+                            <span class="ps-a">A. 중앙 집중형 로그 통합 모니터링 구축</span>
+                            <span class="ps-desc">Rsyslog와 Filebeat로 모든 장비의 로그를 <strong>수집 서버로 전송</strong>하고, <strong>ELK Stack(Kibana)</strong> 대시보드에서 <strong>위협 탐지 시각화</strong> 구현</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-section-title">🚀 성과</div>
+                    <ul class="p-list">
+                        <li>모의 해킹(악성 IP 접속, SSH Brute Force) 시도 시 방화벽 및 서버(iptables)에서 <strong>즉각 차단 성공</strong></li>
+                        <li>로그 중앙화를 통해 장애 발생 시 <strong>원인 파악 시간 단축 및 가시성 확보</strong></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="project-wrapper" id="project2">
+            <div class="project-header-card" onclick="toggleProject('project2')">
+                <div class="project-icon"><i class="fas fa-cube"></i></div>
+                <div class="project-info">
+                    <div class="project-top-row">
+                        <div class="project-title">마인크래프트 클러스터링</div>
+                        <div class="project-meta">
+                            <span><i class="fas fa-user"></i> 2명 (Lead)</span>
+                            <span><i class="far fa-calendar-alt"></i> 2025.08 ~ 2025.10</span>
+                        </div>
+                    </div>
+                    <p class="project-desc">
+                        라즈베리파이와 Velocity 프록시를 활용한 서버 부하 분산 및 Python GUI 관리 도구 개발 프로젝트입니다.
+                    </p>
+                </div>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+
+                <div class="hover-overlay">
+                    <span class="hover-text">눌러서 자세히 보기 👆</span>
+                </div>
+            </div>
+            
+            <div class="project-detail">
+                <div class="detail-content">
+
+                    <div class="pdf-actions">
+                        <a href="서버보안 및 클라이언트 관리분석 가능 마인크래프트 클러스터링 서버 구축.pdf" target="_blank" class="btn-pdf-view">
+                            <i class="fas fa-file-pdf"></i> 상세 보고서(PDF) 바로 보기
+                        </a>
+                        
+                        <a href="https://youtu.be/rBk8q8F5Ysg" target="_blank" class="btn-video-view">
+                            <i class="fab fa-youtube"></i> 시연 영상 보기
+                        </a>
+
+                        <a href="서버보안 및 클라이언트 관리분석 가능 마인크래프트 클러스터링 서버 구축.pdf" download class="btn-pdf-download">
+                            <i class="fas fa-download"></i> 다운로드
+                        </a>
+                    </div>
+
+                    <div class="p-info-grid">
+                        <div class="p-info-item"><strong>역할:</strong> 팀장</div>
+                        <div class="p-info-item"><strong>기여도:</strong> 50%</div>
+                        <div class="p-info-item"><strong>기간:</strong> 2025.08 - 2025.10 (3개월)</div>
+                    </div>
+
+                    <div class="detail-section-title">💡 3줄 요약</div>
+                    <ul class="p-list">
+                        <li>단일 서버 과부하 해결을 위해 <strong>Velocity 프록시 기반 3-Node 클러스터링</strong> 구축</li>
+                        <li>라즈베리파이 클러스터와 <strong>다층 방어 모델(격리-인증-감시)</strong>로 보안성/효율성 강화</li>
+                        <li>CLI 관리의 어려움을 해소하고자 <strong>Python 기반 통합 관리 GUI 도구</strong> 자체 개발</li>
+                    </ul>
+
+                    <div class="detail-section-title">🛠 사용 기술 (Tech Stack)</div>
+                    <div class="p-tech-container">
+                        <span class="p-tech-tag"><i class="fas fa-cube"></i> Core App (Minecraft Paper)</span>
+                        <span class="p-tech-tag"><i class="fas fa-microchip"></i> Infrastructure (Raspberry Pi 5)</span>
+                        <span class="p-tech-tag"><i class="fas fa-project-diagram"></i> Network (Velocity Proxy)</span>
+                        <span class="p-tech-tag"><i class="fas fa-database"></i> Database (MariaDB)</span>
+                        <span class="p-tech-tag"><i class="fab fa-python"></i> Management (Python GUI)</span>
+                        <span class="p-tech-tag"><i class="fab fa-discord"></i> API (Discord)</span>
+                    </div>
+
+                    <div class="detail-section-title">💻 핵심 문제 해결 (Problem & Solution)</div>
+                    <div class="ps-box">
+                        <div class="ps-item">
+                            <span class="ps-q">Q. 사용자 증가에 따른 단일 서버 과부하</span>
+                            <span class="ps-a">A. 프록시 기반 부하 분산(Load Balancing)</span>
+                            <span class="ps-desc">Velocity 프록시를 도입하여 오버월드/네더/관리 서버로 <strong>역할을 분리</strong>하고, <strong>3대의 라즈베리파이에 트래픽을 분산</strong>시켜 성능 최적화</span>
+                        </div>
+                        <div class="ps-item">
+                            <span class="ps-q">Q. 무분별한 비인가 접속 및 테러 위협</span>
+                            <span class="ps-a">A. MFA 도입 및 Zero Trust 기반 다층 방어 모델 적용</span>
+                            <span class="ps-desc">1차: 대기실 격리 → 2차: 화이트리스트 검증 → 3차: <strong>디스코드 연동 2FA(이중 인증)</strong> 완료 시에만 게임 서버 진입 허용</span>
+                        </div>
+                        <div class="ps-item">
+                            <span class="ps-q">Q. 복잡한 리눅스 CLI 명령어로 인한 관리 비효율</span>
+                            <span class="ps-a">A. Python GUI 관리 도구 (BlockOps) 개발</span>
+                            <span class="ps-desc"><strong>서버 상태(CPU/RAM) 실시간 모니터링</strong>, 원클릭 백업, 화이트리스트 관리가 가능한 <strong>GUI 프로그램을 개발</strong>하여 운영 편의성 증대</span>
+                        </div>
+                    </div>
+
+                    <div class="detail-section-title">🚀 성과</div>
+                    <ul class="p-list">
+                        <li>자체 개발 인증 시스템 적용 후 <strong>비인가 접속 시도 원천 차단 및 데이터 안정성 확보</strong></li>
+                        <li>게임 서버(오버월드)의 트래픽과 로그 처리를 분리하고, 플레이어의 행동 데이터를 <strong>관리 서버로 실시간 전송·DB화</strong>하여 <strong>중앙 집중형 데이터 관리 환경</strong> 구현</li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <script>
+        function toggleProject(id) {
+            const projectWrapper = document.getElementById(id);
+            projectWrapper.classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>
