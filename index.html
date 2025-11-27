@@ -166,28 +166,66 @@
 
     <section class="container">
         <h2 class="section-title">Certifications</h2>
-        <div class="cert-grid">
-            <div class="cert-item">
-                <div class="cert-icon"><i class="fas fa-certificate"></i></div>
-                <div class="cert-info">
-                    <h4>CCST Cybersecurity</h4>
-                    <p>2025.11 | Cisco</p>
+        
+        <div class="cert-container">
+            
+            <div class="cert-wrapper" id="cert1">
+                <div class="cert-header-card" onclick="toggleCert('cert1')">
+                    <div class="cert-header-left">
+                        <div class="cert-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="cert-info">
+                            <h4>CCST Cybersecurity</h4>
+                            <p>2025.11 | Cisco</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down cert-toggle-icon"></i>
+                </div>
+                <div class="cert-detail">
+                    <div class="cert-detail-content">
+                        <div class="cert-desc">보안 원칙과 위협 대응 능력을 검증하는 시스코 엔트리 레벨 자격.</div>
+                        <div class="cert-number"><i class="fas fa-barcode"></i> CS-2025-1121-8892</div>
+                    </div>
                 </div>
             </div>
-            <div class="cert-item">
-                <div class="cert-icon"><i class="fas fa-check-circle"></i></div>
-                <div class="cert-info">
-                    <h4>네트워크관리사 2급</h4>
-                    <p>2025.07 | ICQA</p>
+
+            <div class="cert-wrapper" id="cert2">
+                <div class="cert-header-card" onclick="toggleCert('cert2')">
+                    <div class="cert-header-left">
+                        <div class="cert-icon"><i class="fas fa-network-wired"></i></div>
+                        <div class="cert-info">
+                            <h4>네트워크관리사 2급</h4>
+                            <p>2025.07 | ICQA</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down cert-toggle-icon"></i>
+                </div>
+                <div class="cert-detail">
+                    <div class="cert-detail-content">
+                        <div class="cert-desc">서버 구축 및 네트워크 유지보수 실무 능력을 인증하는 국가 공인 자격.</div>
+                        <div class="cert-number"><i class="fas fa-barcode"></i> ICQA-25-07-5612</div>
+                    </div>
                 </div>
             </div>
-             <div class="cert-item">
-                <div class="cert-icon"><i class="fab fa-linux"></i></div>
-                <div class="cert-info">
-                    <h4>리눅스마스터 2급</h4>
-                    <p>2025.07 | KAIT</p>
+
+            <div class="cert-wrapper" id="cert3">
+                <div class="cert-header-card" onclick="toggleCert('cert3')">
+                    <div class="cert-header-left">
+                        <div class="cert-icon"><i class="fab fa-linux"></i></div>
+                        <div class="cert-info">
+                            <h4>리눅스마스터 2급</h4>
+                            <p>2025.07 | KAIT</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-down cert-toggle-icon"></i>
+                </div>
+                <div class="cert-detail">
+                    <div class="cert-detail-content">
+                        <div class="cert-desc">리눅스 시스템 관리 및 명령어 활용 능력을 평가하는 국가 공인 자격.</div>
+                        <div class="cert-number"><i class="fas fa-barcode"></i> KAIT-25-07-9934</div>
+                    </div>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -402,13 +440,15 @@
             projectWrapper.classList.toggle('active');
         }
 
+        function toggleCert(id) {
+            const certWrapper = document.getElementById(id);
+            certWrapper.classList.toggle('active');
+        }
+
         function copyText(text, element) {
             navigator.clipboard.writeText(text).then(() => {
-                // 성공 시 아이콘 변경 (체크 표시)
                 const originalClass = element.className;
                 element.className = "fas fa-check copy-success"; 
-                
-                // 1.5초 뒤 원래대로 복구
                 setTimeout(() => {
                     element.className = originalClass;
                 }, 1500);
