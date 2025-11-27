@@ -104,6 +104,63 @@
             border: 4px solid var(--primary-light);
         }
 
+        /* [수정됨] 희망 직무 박스 스타일 */
+        .job-container {
+            margin-bottom: 25px;
+            text-align: center;
+            background-color: #f8f9fa; /* 연한 회색 배경 */
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .job-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .job-title {
+            font-size: 1.1rem; 
+            font-weight: 800; 
+            color: #333;
+            letter-spacing: -0.5px;
+        }
+
+        .job-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px; 
+        }
+        
+        .job-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 15px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            /* hover 제거됨: transition 등 삭제 */
+            background: #fff; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            cursor: default; /* 마우스 커서 기본값 */
+        }
+        /* .job-item:hover 효과 제거됨 */
+
+        .job-item i { width: 24px; text-align: center; font-size: 1.1rem;}
+
+        /* 직무별 포인트 컬러 (아이콘 및 텍스트) */
+        .job-security { color: #c0392b; border-left: 4px solid #c0392b; }
+        .job-system   { color: #2c3e50; border-left: 4px solid #2c3e50; }
+        .job-network  { color: #00695c; border-left: 4px solid #00695c; }
+        .job-cloud    { color: #0277bd; border-left: 4px solid #0277bd; }
+
+
         .contact-info {
             margin-top: 20px;
             text-align: left;
@@ -137,10 +194,8 @@
             padding: 25px;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            /* hover 제거됨: transition 삭제 */
             border-left: 5px solid var(--primary-color);
         }
-        /* .trait-box:hover 제거됨 */
         
         .trait-icon { font-size: 2rem; color: var(--primary-color); margin-bottom: 10px; }
         .trait-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 5px; }
@@ -202,7 +257,6 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            /* hover 제거됨: transition 삭제 */
             white-space: nowrap;
             overflow: hidden;
             cursor: default;
@@ -212,8 +266,6 @@
             -webkit-font-smoothing: subpixel-antialiased;
         }
         
-        /* .gantt-bar:hover 제거됨 */
-
         .bar-content {
             text-align: center;
             line-height: 1.2;
@@ -261,10 +313,8 @@
             font-size: 0.95rem;
             display: flex; align-items: center; gap: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            /* hover 제거됨: transition 삭제 */
             cursor: default;
         }
-        /* .badge:hover 제거됨 */
         
         .badge.strong { background: #e6f0ff; color: #004080; border: 1px solid #b3d1ff; }
         .badge.know { background: #fff3cd; color: #856404; border: 1px solid #ffe082; } 
@@ -286,9 +336,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            /* hover 제거됨: transition 삭제 */
         }
-        /* .cert-item:hover 제거됨 */
 
         .cert-icon {
             font-size: 1.5rem;
@@ -313,7 +361,6 @@
             position: relative; 
         }
         
-        /* 이 부분은 클릭 가능한 버튼이므로 유지합니다 */
         .project-wrapper:not(.active):hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
@@ -334,7 +381,7 @@
             background: #f9faff;
         }
 
-        /* [수정됨] 호버 오버레이 효과 */
+        /* 호버 오버레이 효과 */
         .hover-overlay {
             position: absolute;
             top: -1px;
@@ -363,7 +410,6 @@
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        /* 닫혀있는 카드 호버 시 설정 - 유지 */
         .project-wrapper:not(.active) .project-header-card:hover .hover-overlay {
             width: 350px; 
             opacity: 1; 
@@ -425,7 +471,7 @@
             background-color: #fdfdfd;
         }
 
-        /* PDF 버튼 스타일 - 버튼이므로 Hover 효과 유지 */
+        /* PDF 버튼 스타일 */
         .pdf-actions {
             display: flex;
             gap: 15px;
@@ -469,15 +515,15 @@
             text-decoration: none;
             transition: all 0.2s;
         }
-        /* [수정됨] 다운로드 버튼에도 팝업 효과 적용 */
+        /* 다운로드 버튼 팝업 효과 */
         .btn-pdf-download:hover {
             background: #f8f9fa;
             border-color: #ced4da;
-            transform: translateY(-3px); /* 추가됨 */
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* 추가됨 */
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); 
         }
 
-        /* 시연 영상 버튼 스타일 - 버튼이므로 Hover 효과 유지 */
+        /* 시연 영상 버튼 스타일 */
         .btn-video-view {
             flex: 1;
             background: linear-gradient(135deg, #ff0000 0%, #c4302b 100%);
@@ -559,6 +605,19 @@
             color: var(--primary-color);
             font-size: 0.9rem;
         }
+        
+        /* [수정됨] Project 2용 테크 컨테이너 (Flex 줄바꿈 적용) */
+        .p-tech-rows {
+            display: flex;
+            flex-direction: column; /* 세로로 배치 (Row 1, Row 2) */
+            gap: 8px;
+        }
+        .p-tech-row {
+            display: flex;
+            flex-wrap: wrap; /* 내용 많으면 줄바꿈 */
+            gap: 8px;
+        }
+
 
         .ps-box {
             display: flex;
@@ -607,6 +666,7 @@
             
             /* 모바일에서는 오버레이 효과 숨김 */
             .hover-overlay { display: none !important; }
+
         }
     </style>
 </head>
@@ -618,7 +678,32 @@
             <div class="profile-card">
                 <img src="https://via.placeholder.com/150" alt="프로필 사진" class="profile-img">
                 <h3>허준혁</h3>
-                <p style="margin-bottom: 15px; color: #666; font-weight: 500;">Cloud Security Engineer</p>
+                
+                <div class="job-container">
+                    <div class="job-header">
+                        <i class="fas fa-id-badge" style="font-size: 1.2rem;"></i>
+                        <span class="job-title">희망 직무</span>
+                    </div>
+                    
+                    <div class="job-list">
+                        <div class="job-item job-security">
+                            <i class="fas fa-shield-halved"></i>
+                            <span>Security Engineer</span>
+                        </div>
+                        <div class="job-item job-system">
+                            <i class="fas fa-server"></i>
+                            <span>System Engineer</span>
+                        </div>
+                        <div class="job-item job-network">
+                            <i class="fas fa-network-wired"></i>
+                            <span>Network Engineer</span>
+                        </div>
+                        <div class="job-item job-cloud">
+                            <i class="fas fa-cloud"></i>
+                            <span>Cloud Engineer</span>
+                        </div>
+                    </div>
+                </div>
                 
                 <div class="contact-info">
                     <div class="contact-item"><i class="fas fa-envelope"></i> hjhv8v@naver.com</div>
@@ -791,7 +876,7 @@
                             <i class="fas fa-file-pdf"></i> 상세 보고서(PDF) 바로 보기
                         </a>
                         <a href="인프라 보안 구축 프로젝트.pdf" download class="btn-pdf-download">
-                            <i class="fas fa-download"></i> 다운로드
+                            <i class="fas fa-download"></i> PDF 다운로드
                         </a>
                     </div>
 
@@ -882,7 +967,7 @@
                         </a>
 
                         <a href="서버보안 및 클라이언트 관리분석 가능 마인크래프트 클러스터링 서버 구축.pdf" download class="btn-pdf-download">
-                            <i class="fas fa-download"></i> 다운로드
+                            <i class="fas fa-download"></i> PDF 다운로드
                         </a>
                     </div>
 
@@ -900,13 +985,18 @@
                     </ul>
 
                     <div class="detail-section-title">🛠 사용 기술 (Tech Stack)</div>
-                    <div class="p-tech-container">
-                        <span class="p-tech-tag"><i class="fas fa-cube"></i> Core App (Minecraft Paper)</span>
-                        <span class="p-tech-tag"><i class="fas fa-microchip"></i> Infrastructure (Raspberry Pi 5)</span>
-                        <span class="p-tech-tag"><i class="fas fa-project-diagram"></i> Network (Velocity Proxy)</span>
-                        <span class="p-tech-tag"><i class="fas fa-database"></i> Database (MariaDB)</span>
-                        <span class="p-tech-tag"><i class="fab fa-python"></i> Management (Python GUI)</span>
-                        <span class="p-tech-tag"><i class="fab fa-discord"></i> API (Discord)</span>
+                    
+                    <div class="p-tech-rows">
+                        <div class="p-tech-row">
+                            <span class="p-tech-tag"><i class="fas fa-cube"></i> Core App (Minecraft Paper)</span>
+                            <span class="p-tech-tag"><i class="fas fa-microchip"></i> Infrastructure (Raspberry Pi 5)</span>
+                            <span class="p-tech-tag"><i class="fas fa-project-diagram"></i> Network (Velocity Proxy)</span>
+                        </div>
+                        <div class="p-tech-row">
+                            <span class="p-tech-tag"><i class="fas fa-database"></i> Database (MariaDB)</span>
+                            <span class="p-tech-tag"><i class="fab fa-python"></i> Management (Python GUI)</span>
+                            <span class="p-tech-tag"><i class="fab fa-discord"></i> API (Discord)</span>
+                        </div>
                     </div>
 
                     <div class="detail-section-title">💻 핵심 문제 해결 (Problem & Solution)</div>
