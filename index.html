@@ -137,10 +137,11 @@
             padding: 25px;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            transition: transform 0.3s;
+            /* hover 제거됨: transition 삭제 */
             border-left: 5px solid var(--primary-color);
         }
-        .trait-box:hover { transform: translateY(-5px); }
+        /* .trait-box:hover 제거됨 */
+        
         .trait-icon { font-size: 2rem; color: var(--primary-color); margin-bottom: 10px; }
         .trait-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 5px; }
         .trait-desc { font-size: 0.9rem; color: var(--text-sub); word-break: keep-all; }
@@ -201,7 +202,7 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease-out, box-shadow 0.2s ease;
+            /* hover 제거됨: transition 삭제 */
             white-space: nowrap;
             overflow: hidden;
             cursor: default;
@@ -211,11 +212,7 @@
             -webkit-font-smoothing: subpixel-antialiased;
         }
         
-        .gantt-bar:hover { 
-            z-index: 100; 
-            transform: translateY(-3px); 
-            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-        }
+        /* .gantt-bar:hover 제거됨 */
 
         .bar-content {
             text-align: center;
@@ -264,13 +261,10 @@
             font-size: 0.95rem;
             display: flex; align-items: center; gap: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            /* hover 제거됨: transition 삭제 */
             cursor: default;
         }
-        .badge:hover {
-            transform: translateY(-3px) scale(1.02); 
-            box-shadow: 0 5px 12px rgba(0,0,0,0.1);
-        }
+        /* .badge:hover 제거됨 */
         
         .badge.strong { background: #e6f0ff; color: #004080; border: 1px solid #b3d1ff; }
         .badge.know { background: #fff3cd; color: #856404; border: 1px solid #ffe082; } 
@@ -292,9 +286,9 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            transition: 0.3s;
+            /* hover 제거됨: transition 삭제 */
         }
-        .cert-item:hover { transform: translateY(-3px); }
+        /* .cert-item:hover 제거됨 */
 
         .cert-icon {
             font-size: 1.5rem;
@@ -319,6 +313,7 @@
             position: relative; 
         }
         
+        /* 이 부분은 클릭 가능한 버튼이므로 유지합니다 */
         .project-wrapper:not(.active):hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
@@ -339,28 +334,20 @@
             background: #f9faff;
         }
 
-        /* [수정됨] 호버 오버레이 효과 (빈틈 방지를 위한 크기 조정) */
+        /* [수정됨] 호버 오버레이 효과 */
         .hover-overlay {
             position: absolute;
-            /* 상하 1px씩 여유를 주어 빈틈을 메움.
-               top: -1px, height: calc(100% + 2px) 
-            */
             top: -1px;
             right: 0;
             width: 0; 
             height: calc(100% + 2px);
-            
-            /* 불투명한 배경 (그라데이션) */
             background: linear-gradient(to right, transparent, #e6f0ff 30%);
-            
             display: flex;
             align-items: center;
             justify-content: flex-end;
             padding-right: 0;
             overflow: hidden;
-            
             transition: width 0.3s ease-in-out, padding-right 0.3s ease-in-out, opacity 0.2s ease;
-            
             pointer-events: none; 
             z-index: 5; 
             opacity: 0; 
@@ -376,7 +363,7 @@
             transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
-        /* 닫혀있는 카드 호버 시 설정 */
+        /* 닫혀있는 카드 호버 시 설정 - 유지 */
         .project-wrapper:not(.active) .project-header-card:hover .hover-overlay {
             width: 350px; 
             opacity: 1; 
@@ -438,7 +425,7 @@
             background-color: #fdfdfd;
         }
 
-        /* PDF 버튼 스타일 */
+        /* PDF 버튼 스타일 - 버튼이므로 Hover 효과 유지 */
         .pdf-actions {
             display: flex;
             gap: 15px;
@@ -482,12 +469,15 @@
             text-decoration: none;
             transition: all 0.2s;
         }
+        /* [수정됨] 다운로드 버튼에도 팝업 효과 적용 */
         .btn-pdf-download:hover {
             background: #f8f9fa;
             border-color: #ced4da;
+            transform: translateY(-3px); /* 추가됨 */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* 추가됨 */
         }
 
-        /* 시연 영상 버튼 스타일 */
+        /* 시연 영상 버튼 스타일 - 버튼이므로 Hover 효과 유지 */
         .btn-video-view {
             flex: 1;
             background: linear-gradient(135deg, #ff0000 0%, #c4302b 100%);
@@ -862,7 +852,7 @@
                 <div class="project-icon"><i class="fas fa-cube"></i></div>
                 <div class="project-info">
                     <div class="project-top-row">
-                        <div class="project-title">마인크래프트 클러스터링 (네모의 꿈)</div>
+                        <div class="project-title">마인크래프트 클러스터링</div>
                         <div class="project-meta">
                             <span><i class="fas fa-user"></i> 2명 (Lead)</span>
                             <span><i class="far fa-calendar-alt"></i> 2025.08 ~ 2025.10</span>
@@ -958,5 +948,4 @@
     </script>
 
 </body>
-
 </html>
