@@ -572,7 +572,7 @@ ul { list-style: none; }
     background-color: #fdfdfd;
 }
 
-/* [청록색(Teal/Mint) 안내 박스] */
+/* 청록색(Teal/Mint) 안내 박스 */
 .notice-box {
     background-color: #e0f2f1; 
     border-left: 5px solid #009688; 
@@ -758,10 +758,7 @@ ul { list-style: none; }
     word-break: break-word;
 }
 
-.p-tech-tag:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-}
+/* [삭제됨] 마우스 호버 확대 효과 제거 (.p-tech-tag:hover 규칙 삭제) */
 
 .p-tech-tag i {
     color: var(--primary-color);
